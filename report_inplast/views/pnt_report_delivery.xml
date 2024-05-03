@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <template id="pnt_report_delivery_document">
+    <!-- Todos los templates para picking deben tener prioridad 22 para el filtro del M2O -->
+    <template id="pnt_report_delivery_document" name="Albarán Nestle Baxton" priority="22">
         <t t-name="pnt_report_delivery_document">
             <t t-call="web.html_container">
                 <t t-call="web.external_layout">
@@ -208,24 +209,5 @@
             </t>
         </t>
     </template>
-
-
-    <template id="pnt_report_delivery">
-        <t t-name="pnt_report_delivery">
-            <t t-foreach="docs" t-as="o">
-                <t t-call="report_insplast.pnt_report_delivery_document" t-lang="o._get_report_lang()"/>
-            </t>
-        </t>
-    </template>
-
-
-    <record id="pnt_report_stock_picking" model="ir.actions.report">
-        <field name="name">Albaran_2</field>
-        <field name="model">stock.picking</field>
-        <field name="report_type">qweb-pdf</field>
-        <field name="report_name">report_inplast.pnt_report_delivery</field>
-        <field name="report_file">report_inplast.pnt_report_delivery</field>
-        <field name="binding_model_id" ref="model_stock_picking"/>
-    </record>
 
 </odoo>
