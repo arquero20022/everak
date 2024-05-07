@@ -5,19 +5,51 @@
         <field name="name">inplast.report.picking.attachments</field>
         <field name="inherit_id" ref="report_inplast.pnt_report_delivery_document"/>
         <field name="arch" type="xml">
-                <xpath expr="//div[@name='outgoing_delivery_address']" position="replace">
-                    <div name="outgoing_delivery_address" t-if="o.should_print_delivery_address()">
-                                <span><strong>Hola Pedro:</strong></span>
-                                <div t-field="o.move_ids[0].partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
-                            </div>
+            <xpath expr="//div[@name='outgoing_delivery_address']" position="replace">
+                <div name="outgoing_delivery_address" t-if="o.should_print_delivery_address()">
+                    <span>
+                        <strong>Hola Pedro:</strong>
+                    </span>
+                    <div t-field="o.move_ids[0].partner_id"
+                         t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+                </div>
             </xpath>
-             <xpath expr="//div[@name='outgoing_delivery_address']" position="after">
-                    <div name="outgoing_delivery_address" t-if="o.should_print_delivery_address()">
-                                <span><strong>Hola Pedro:</strong></span>
-                                <div t-field="o.move_ids[0].partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
-                            </div>
-                 <!--<img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 45px;" alt="Logo"/>-->
+            <xpath expr="//table[@name='stock_move_line_table']" position="after">
+                <div name="outgoing_delivery_address" t-if="o.should_print_delivery_address()">
+                    <span>
+                        <strong>Hola Adrian:</strong>
+                    </span>
+                    <t t-set="company" t-value="o.company_id"/>
+                    <img t-if="company.pnt_goods_state_table" t-att-src="image_data_uri(company.pnt_goods_state_table)"
+                         alt="Company Image"/>
+
+                    <div style="margin-bottom: 20px;">
+                        <strong>Total bultos:</strong><span t-field="o.name"/>
+
+
+                        <strong>Total boxes:</strong><span t-field="o.name"/>
+
+                        <span><strong>Total gross weight:</strong></span>
+
+
+                       <span> <strong>Total net weight:</strong></span>
+
+
+                    </div>
+                    <div>
+                        <strong>Order Number:</strong>
+
+                        <strong>Transport Agency:</strong>
+
+                        <strong>Date:</strong>
+
+                    </div>
+
+
+                </div>
             </xpath>
+
+
         </field>
         <field name="priority">99</field>
     </record>
