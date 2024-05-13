@@ -5,11 +5,12 @@
     <template id="pnt_report_delivery_document" name="Albarán Nestle Baxton" priority="22">
         <t t-name="pnt_report_delivery_document">
             <t t-call="web.html_container">
-                <t t-call="web.external_layout">
+                <t t-call="web.external_layout"  >
                     <t t-set="o" t-value="o.with_context(lang=o._get_report_lang())"/>
                     <t t-set="partner" t-value="o.partner_id or (o.move_ids and o.move_ids[0].partner_id) or False"/>
 
-                    <t t-set="address">
+
+                    <t t-set="address" name="address">
                         <div name="div_outgoing_address">
                             <div name="outgoing_delivery_address" t-if="o.should_print_delivery_address()">
                                 <span><strong>Delivery Address:</strong></span>

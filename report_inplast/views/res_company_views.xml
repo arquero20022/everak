@@ -11,6 +11,9 @@
                 <page name="Reports">
                     <group name="reports_field">
                         <field name="pnt_goods_state_table" widget="image"/>
+                        <field name="pnt_logo_cert_uno" widget="image"/>
+                        <field name="pnt_logo_cert_dos" widget="image"/>
+                        <field name="pnt_logo_cert_tres" widget="image"/>
                     </group>
                 </page>
             </xpath>
