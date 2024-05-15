@@ -1,52 +1,44 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <record id="pnt_external_layout_boxed" model="ir.ui.view">
-        <field name="name">pnt.external.layout.boxed</field>
-        <field name="inherit_id" ref="web.external_layout_boxed" />
+    <record id="inplast_external_layout_custom" model="ir.ui.view">
+        <field name="name">inplast.external.layout.custom</field>
+        <field name="inherit_id" ref="web.external_layout_standard"/>
         <field name="arch" type="xml">
-            <xpath expr="//div[hasclass('row')]" position="replace">
-                <div class="row mb12" >
-                    <div class="col-4 mb4 text-start" style="margin-left:-40px">
-                        <div class="mt0 h4" t-if="company.report_header" t-field="company.report_header">Company tagline</div>
-                        <div name="company_address" class="float-end " style="margin-top:15px">
-                            <ul class="list-unstyled" name="company_address_list">
-                                <b>
-                                    <t t-if="company.name">
-                                        <li style="font-size:20px;font-weight:22px"><span t-field="company.name"/></li>
-                                    </t>
-                                    <t t-if="company.street">
-                                        <li><span t-field="company.street"/></li>
-                                    </t>
-                                    <li><span t-esc="company.zip"/> <span t-field="company.city"/></li>
-                                    <li t-if="not forced_vat"/>
-                                    <li t-else="">
-                                        <t t-esc="company.country_id.vat_label or 'Tax ID'">Tax ID</t>:
-                                        <span t-esc="forced_vat">US12345671</span>
-                                    </li>
-                                </b>
-                            </ul>
+
+            <xpath expr="//div[@t-attf-class='header o_company_#{company.id}_layout']" position="replace"
+                   style="padding 100px; border: none;">
+
+                <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+                    <div class="row">
+                        <div class="col-3 mb4">
+                            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 70px;" alt="Logo"/>
                         </div>
+
+                        <div class="col-9 text-end" style="margin-top:22px;" t-if="company.report_header" t-field="company.report_header" name="moto">Company tagline</div>
                     </div>
-                    <div class="col-4 mb4  text-center"  style="margin-top:30px;margin-left:40px">
-                        <div class="mt0 h4" t-if="company.report_header" t-field="company.report_header">Company tagline</div>
-                        <div name="company_info" class="float-center mb4">
-                            <b>
-                                <ul class="list-unstyled" name="company_info_list">
-                                    <li>Tel: <span t-field="company.phone"/></li>
-                                    <li>Mov: <span t-field="company.mobile"/></li>
-                                    <li><span t-field="company.email"/></li>
-                                </ul>
-                            </b>
+                    <div class="row" style="margin-top:-10px">
+                        <div class="col-4 mb4">
+                            <img t-if="company.pnt_logo_cert_uno"
+                                 t-att-src="image_data_uri(company.pnt_logo_cert_uno)"
+                                 alt="Company logo" style="height: 70px;"/>
                         </div>
-                    </div>
-                    <div class="col-4 mb4 text-end">
-                        <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="height: 200px;" alt="Logo"/>
+                        <div class="col-offset-20 col-4  mb4">
+                            <img t-if="company.pnt_logo_cert_dos"
+                                 t-att-src="image_data_uri(company.pnt_logo_cert_dos)"
+                                 alt="Company logo2" style="height: 70px;"/>
+                        </div>
+                        <div class="col-offset-24 col-4  mb4">
+                            <img t-if="company.pnt_logo_cert_tres"
+                                 t-att-src="image_data_uri(company.pnt_logo_cert_tres)"
+                                 alt="Company logo" style="height: 70px;"/>
+                        </div>
                     </div>
                 </div>
             </xpath>
         </field>
     </record>
+
 
 
 

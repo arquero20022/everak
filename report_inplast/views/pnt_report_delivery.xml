@@ -5,12 +5,11 @@
     <template id="pnt_report_delivery_document" name="Albarán Nestle Baxton" priority="22">
         <t t-name="pnt_report_delivery_document">
             <t t-call="web.html_container">
-                <t t-call="web.external_layout"  >
+                <t t-call="web.external_layout">
                     <t t-set="o" t-value="o.with_context(lang=o._get_report_lang())"/>
                     <t t-set="partner" t-value="o.partner_id or (o.move_ids and o.move_ids[0].partner_id) or False"/>
 
-
-                    <t t-set="address" name="address">
+                    <t t-set="address">
                         <div name="div_outgoing_address">
                             <div name="outgoing_delivery_address" t-if="o.should_print_delivery_address()">
                                 <span><strong>Delivery Address:</strong></span>
@@ -191,6 +190,60 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div style="width: 100%;">
+                            <t t-set="company" t-value="o.company_id"/>
+                            <img t-if="company.pnt_goods_state_table"
+                                 t-att-src="image_data_uri(company.pnt_goods_state_table)"
+                                 alt="Company Image"/>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <strong>Total bultos:</strong>
+                            <span t-field="o.name"/>
+                            <br/>
+
+                            <strong>Total cajas:</strong>
+                            <span t-field="o.name"/>
+                            <br/>
+
+                            <strong>Total peso neto:</strong>
+                            <span t-field="o.weight"/>
+                            <br/>
+
+                            <strong>Total peso bruto:</strong>
+                            <span t-field="o.weight"/>
+                            <br/>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-4">
+                                <strong style="border: 2px solid #000000; padding: 5px; text-align: left;">Nº Pedido:
+                                </strong>
+                                <span t-field="o.name"/>
+                            </div>
+                            <div class="col-offset-8 col-4">
+                                <strong style="border: 2px solid #000000; padding: 5px; text-align: left;">Agencia de
+                                    Transporte:
+                                </strong>
+                                <span t-field="o.carrier_id"/>
+
+                            </div>
+                            <div class="col-offset-16 col-4">
+                                <strong style="border: 2px solid #000000; padding: 5px; text-align: left;">Fecha:</strong>
+                                <span t-field="o.date"/>
+
+                            </div>
+                        </div>
+                        <div>
+                            <p>
+                                El poseedor final de los residuos de envases y embalajes usados deberá entregarlos en
+                                condiciones adecuadas de separación por materiales a
+                                un agente ecológico para su reutilización a un recuperador, a un reciclador o a un
+                                valorizador autorizados.\n
+                                Inscrita en el Registro Mercantil de Alicante: Tomo 1.712 General, Folio 11. Hoja nº.
+                                A-27.348. Inscripción 1ª, 14-6-1994 - C.I.F. A-03946472
+                            </p>
                         </div>
 
                         <div t-if="not o.signature" class="oe_structure"/>

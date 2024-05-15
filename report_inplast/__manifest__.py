@@ -15,14 +15,15 @@
         "sale_management",
         "account",
         "stock",
+        "mrp",
         "web",
     ],
     "data": [
         "views/res_partner_views.xml",
-        "views/res_company_views.xml",
         "views/templates.xml",
         "views/pnt_report_delivery.xml",
-        "views/test_herencias.xml",
-        #"reports/external_layouts.xml",
+        "views/pnt_production_label.xml",
+        "views/res_company_views.xml",
+        "reports/external_layouts.xml",
     ],
 }
