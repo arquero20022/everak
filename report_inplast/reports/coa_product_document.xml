@@ -14,68 +14,80 @@
                 <div style="border: 1px solid black; padding: 10px;">
                     <strong style="border-bottom: 1px solid black; width:40px">Product purchase data</strong>
                     <div class="row" style="margin-top:2px;">
-                        <div style="background-color:#81bddc;border: 1px solid black; padding: 2px;margin:1px;" class="col-2">
+                        <div style="background-color:#81bddc;border: 1px solid black; padding: 2px;margin:1px;"
+                             class="col-2">
                             <span>Denomination</span>
                         </div>
                         <div style="border: 1px solid black; padding: 3px;margin:1px;" class="col-6">
                             <span t-field="line.product_id.name"/>
                         </div>
-                        <div style="background-color:#81bddc;border: 1px solid black; padding: 2px;margin:1px;" class="col-2">
+                        <div style="background-color:#81bddc;border: 1px solid black; padding: 2px;margin:1px;"
+                             class="col-2">
                             <span>Counter</span>
                         </div>
                         <div style="border: 1px solid black; padding: 2px;margin:1px;" class="col-2">
-                            <span t-field="line.quantity"/>
+                            <span t-esc="line.quantity"/>
                         </div>
 
                     </div>
                     <div class="row">
-                        <div style="background-color:#81bddc;border: 1px solid black; padding: 5px;margin:1px;" class="col-2">
-                            <span >Reference Nº</span>
+                        <div style="background-color:#81bddc;border: 1px solid black; padding: 5px;margin:1px;"
+                             class="col-2">
+                            <span>Reference Nº</span>
                         </div>
                         <div style="border: 1px solid black; padding: 2px;margin:1px;" class="col-3">
                             <span t-field="line.product_id.name"/>
                         </div>
-                        <div style="background-color:#81bddc;border: 1px solid black; padding: 2px;margin:1px;" class="col-1">
+                        <div style="background-color:#81bddc;border: 1px solid black; padding: 2px;margin:1px;"
+                             class="col-1">
                             <span>Batch Nº</span>
                         </div>
                         <div style="border: 1px solid black; padding: 2px;margin:1px;" class="col-2">
-                            <span t-field="line.lot_ids"/>
+                            <t t-if="line.lot_ids">
+                                <t t-esc="line.lot_ids[0].name"/>
+                            </t>
+
                         </div>
-                        <div style="background-color:#81bddc;border: 1px solid black; padding: 2px;margin:1px;" class="col-2">
+                        <div style="background-color:#81bddc;border: 1px solid black; padding: 2px;margin:1px;"
+                             class="col-2">
                             <span>Quantity</span>
                         </div>
                         <div style="border: 1px solid black; padding: 2px;margin:1px;margin-top:2px;" class="col-2">
-                            <span t-field="line.quantity"/>
+                            <span t-esc="line.product_id.pnt_parent_qty * line.quantity"/>
                         </div>
 
                     </div>
                     <div class="row">
-                        <div style="background-color:#81bddc;border: 1px solid black; padding: 5px;margin:1px;" class="col-2">
-                            <span >Raw Material</span>
+                        <div style="background-color:#81bddc;border: 1px solid black; padding: 5px;margin:1px;"
+                             class="col-2">
+                            <span>Raw Material</span>
                         </div>
                         <div style="border: 1px solid black; padding: 2px;margin:1px;" class="col-3">
                             <span t-field="line.product_id.pnt_product_dye"/>
                         </div>
-                        <div style="background-color:#81bddc;border: 1px solid black; padding: 2px;margin:1px;" class="col-1">
+                        <div style="background-color:#81bddc;border: 1px solid black; padding: 2px;margin:1px;"
+                             class="col-1">
                             <span>Colour</span>
                         </div>
                         <div style="border: 1px solid black; padding: 2px;margin:1px;" class="col-2">
                             <span t-field="line.product_id.pnt_product_dye"/>
                         </div>
-                        <div style="background-color:#81bddc;border: 1px solid black; padding: 2px;margin:1px;" class="col-2">
+                        <div style="background-color:#81bddc;border: 1px solid black; padding: 2px;margin:1px;"
+                             class="col-2">
                             <span>Waybill Nº</span>
                         </div>
                         <div style="border: 1px solid black; padding: 2px;margin:1px;margin-top:2px;" class="col-2">
-                            <span t-field="line.quantity"/>
+                            <span t-field="line.origin"/>
                         </div>
 
                     </div>
                     <div class="row">
-                        <div style="background-color:#81bddc;border: 1px solid black; padding: 5px;margin:1px;" class="col-2">
-                            <span >Cod.CLI</span>
+                        <div style="background-color:#81bddc;border: 1px solid black; padding: 5px;margin:1px;"
+                             class="col-2">
+                            <span>Cod.CLI</span>
                         </div>
                         <div style="border: 1px solid black; padding: 2px;margin:1px;" class="col-3">
-                            <span t-field="line.quantity"/>
+                            <span t-field="o.sale_id.client_order_ref"/>
                         </div>
                         <div style="margin:1px;" class="col-1">
 
@@ -83,28 +95,30 @@
                         <div style="margin:1px;" class="col-2">
 
                         </div>
-                        <div style="background-color:#81bddc;border: 1px solid black; padding: 2px;margin:1px;" class="col-2">
+                        <div style="background-color:#81bddc;border: 1px solid black; padding: 2px;margin:1px;"
+                             class="col-2">
                             <span>Prod. Date</span>
                         </div>
                         <div style="border: 1px solid black; padding: 2px;margin:1px;margin-top:2px;" class="col-2">
-                            <span t-esc="o.date.strftime('%d/%m/%Y')"/>
+                            <t t-if="line.lot_ids">
+                                <t t-esc="line.lot_ids[0].create_date.strftime('%d/%m/%Y')"/>
+                            </t>
+
                         </div>
 
                     </div>
                     <div class="row">
-                        <div style="background-color:#81bddc;border: 1px solid black; padding: 5px;margin:1px;" class="col-2">
-                            <span >Destination</span>
+                        <div style="background-color:#81bddc;border: 1px solid black; padding: 5px;margin:1px;"
+                             class="col-2">
+                            <span>Destination</span>
                         </div>
-                        <div style="border: 1px solid black; padding: 5px;margin:1px; text-align: center;" class="col-10">
+                        <div style="border: 1px solid black; padding: 5px;margin:1px; text-align: center;"
+                             class="col-10">
                             <span t-field="o.partner_id"/>
                         </div>
 
 
                     </div>
-
-
-
-
 
 
                 </div>

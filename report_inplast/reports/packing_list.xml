@@ -9,27 +9,28 @@
                     <div style="border-bottom: 2px solid black;font-size: 25px;">
                         <strong>Packing list</strong>
                     </div>
-                    <div class="row"
-                         style="background-color: #D3D3D3;padding: 5px; border: 1px solid black;margin-top: 10px;">
-                        <div class="col-2">Waybill N.</div>
-                        <div class="col-2">Date</div>
-                        <div class="col-2">Customer</div>
-                        <div class="col-2">Page</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-2">
-                            <span t-field="o.name">WH/OUT/0001</span>
+
+
+                        <div class="row"
+                             style="background-color: #D3D3D3;padding: 5px; border: 1px solid black;margin-top: 10px;">
+                            <div class="col-2">Waybill N.</div>
+                            <div class="col-2">Date</div>
+                            <div class="col-2">Customer</div>
+
                         </div>
-                        <div class="col-2">
-                            <span t-field="o.date"></span>
+                        <div class="row">
+                            <div class="col-2">
+                                <span t-field="o.name">WH/OUT/0001</span>
+                            </div>
+                            <div class="col-2">
+                                <span t-esc="o.date.strftime('%d/%m/%Y')"></span>
+                            </div>
+                            <div class="col-2">
+                                <span t-field="o.partner_id.user_id"></span>
+                            </div>
+
                         </div>
-                        <div class="col-2">
-                            <span t-field="o.partner_id.user_id"></span>
-                        </div>
-                        <div class="col-2">
-                            <span t-esc="0" t-raw="pdfpagecount"/>
-                        </div>
-                    </div>
+
 
                     <t t-set="o" t-value="o.with_context(lang=o._get_report_lang())"/>
                     <t t-set="partner" t-value="o.partner_id or (o.move_ids and o.move_ids[0].partner_id) or False"/>
@@ -86,6 +87,9 @@
                             <tbody>
                                 <t t-set="lines" t-value="o.move_ids.filtered(lambda x: x.product_uom_qty)"/>
                                 <t t-set="total_quantity" t-value="sum(line.quantity for line in lines)"/>
+                                <t t-set="total_quantity_box"
+                                   t-value="sum((line.product_id.pnt_parent_qty/line.product_id.pnt_parent_id.pnt_packing_ids[0].pnt_parent_qty)*line.quantity for line in lines)"/>
+
                                 <t t-set="total_quantity_weight"
                                    t-value="sum(line.product_id.weight * line.quantity for line in lines)"/>
                                 <tr t-foreach="lines" t-as="move">
@@ -161,7 +165,7 @@
                                 </div>
                                 <div class="col-offset-6 col-4">
                                     <strong>Total Boxes:</strong>
-                                    <span t-field="o.name"/>
+                                    <span t-esc="total_quantity_box"/>
                                 </div>
                             </div>
                             <div class="row">

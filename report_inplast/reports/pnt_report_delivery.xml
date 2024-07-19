@@ -11,6 +11,7 @@
                     <t t-if="o.partner_id.pnt_picking_report_id.coa" t-call="report_inplast.coa_product_document_a"/>
                     <t t-if="o.partner_id.pnt_picking_report_id.components_table"
                        t-call="report_inplast.coa_product_document_attachment"/>
+
                 </t>
                 <t t-call="report_inplast.packing_list"/>
             </t>
@@ -47,6 +48,9 @@
                 <tbody>
                     <t t-set="lines" t-value="o.move_ids.filtered(lambda x: x.product_uom_qty)"/>
                     <t t-set="total_quantity" t-value="sum(line.quantity for line in lines)"/>
+                     <t t-set="total_quantity_box" t-value="sum((line.product_id.pnt_parent_qty/line.product_id.pnt_parent_id.pnt_packing_ids[0].pnt_parent_qty)*line.quantity for line in lines)"/>
+
+
                     <t t-set="total_quantity_weight"
                        t-value="sum(line.product_id.weight * line.quantity for line in lines)"/>
                     <tr t-foreach="lines" t-as="move">
@@ -77,6 +81,8 @@
 
             <xpath expr="//div[@t-if='not o.signature']" position="before">
 
+
+
                 <div style="width: 65%;">
                     <t t-set="company" t-value="o.company_id"/>
                     <img t-if="company.pnt_goods_state_table" t-att-src="image_data_uri(company.pnt_goods_state_table)"
@@ -87,7 +93,7 @@
                     <span t-esc="total_quantity"/>
                     <br/>
                     <strong style="margin-top: 5px;">Total cajas:</strong>
-                    <span t-esc="total_quantity"/>
+                    <span t-esc="total_quantity_box">0</span>
                     <br/>
                     <strong style="margin-top: 5px;">Total peso neto:</strong>
                     <span t-esc="total_quantity_weight"/>
@@ -113,7 +119,7 @@
                         <strong style="border: 2px solid #000000; padding: 5px; text-align: left; background-color:#D3D3D3;">
                             Fecha:
                         </strong>
-                        <span style="margin-left: 5px" t-field="o.date"/>
+                        <span style="margin-left: 5px" t-esc="o.date.strftime('%d/%m/%Y')"/>
                     </div>
                 </div>
                 <div style="margin-top: 15px;">
