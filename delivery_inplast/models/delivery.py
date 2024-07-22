@@ -12,5 +12,7 @@ class ResPartner(models.Model):
     pnt_license_plate = fields.Char(string='License Plate')
     pnt_trailer_container = fields.Char(string='Trailer / Container')
 
+    pnt_print_picking_list = fields.Boolean("Print picking list")
+
 
 

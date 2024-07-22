@@ -11,6 +11,7 @@
                 <page name="Reports">
                        <group>
                             <group>
+                                <field name="pnt_print_picking_list"/>
                                 <field name="pnt_agency_or_carrier"/>
                                 <field name="pnt_address"/>
                                 <field name="pnt_cif"/>

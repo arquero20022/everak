@@ -9,11 +9,13 @@
                 <t t-set="lines" t-value="o.move_ids"/>
                 <t t-foreach="lines" t-as="line">
                     <t t-if="o.partner_id.pnt_picking_report_id.coa" t-call="report_inplast.coa_product_document_a"/>
+                    <t t-if="o.partner_id.pnt_picking_report_id.coa_handle" t-call="report_inplast.coa_product_handle_document"/>
                     <t t-if="o.partner_id.pnt_picking_report_id.components_table"
                        t-call="report_inplast.coa_product_document_attachment"/>
-
+                    <t t-if="o.partner_id.pnt_picking_report_id.coa_batch_certificate"
+                       t-call="report_inplast.coa_product_batch_certificate_document"/>
                 </t>
-                <t t-call="report_inplast.packing_list"/>
+                <t t-if="o.carrier_id.pnt_print_picking_list" t-call="report_inplast.packing_list"/>
             </t>
         </t>
     </template>
@@ -48,7 +50,7 @@
                 <tbody>
                     <t t-set="lines" t-value="o.move_ids.filtered(lambda x: x.product_uom_qty)"/>
                     <t t-set="total_quantity" t-value="sum(line.quantity for line in lines)"/>
-                     <t t-set="total_quantity_box" t-value="sum((line.product_id.pnt_parent_qty/line.product_id.pnt_parent_id.pnt_packing_ids[0].pnt_parent_qty)*line.quantity for line in lines)"/>
+                    <t t-set="total_quantity_box" t-value="sum((line.product_id.pnt_box_qty)*line.quantity for line in lines)"/>
 
 
                     <t t-set="total_quantity_weight"
@@ -96,10 +98,10 @@
                     <span t-esc="total_quantity_box">0</span>
                     <br/>
                     <strong style="margin-top: 5px;">Total peso neto:</strong>
-                    <span t-esc="total_quantity_weight"/>
+                    <span t-esc="o.weight"/>
                     <br/>
                     <strong style="margin-top: 5px;">Total peso bruto:</strong>
-                    <span t-esc="total_quantity_weight"/>
+                    <span t-esc="o.shipping_weight"/>
                     <br/>
                 </div>
                 <div class="row" style="margin-top: 20px;">
@@ -107,7 +109,7 @@
                         <strong style="border: 2px solid #000000; padding: 5px; text-align: left;background-color:#D3D3D3;">
                             Nº Pedido:
                         </strong>
-                        <span style="margin-left: 5px" t-field="o.name"/>
+                        <span style="margin-left: 5px" t-field="o.sale_id.client_order_ref"/>
                     </div>
                     <div class="col-offset-8 col-4">
                         <strong style="border: 2px solid #000000; padding: 5px; text-align: left;background-color:#D3D3D3;">
@@ -155,17 +157,17 @@
                 </div>
                 <div class="row gx-2">
                     <div class="col-5 col-auto">
-                        <strong t-field="o.move_ids[0].partner_id"/>
+                        <strong t-field="o.partner_id"/>
                     </div>
                     <div class="col-2 col-auto">
-                        <span t-field="o.move_ids[0].partner_id.phone"/>
+                        <span t-field="o.partner_id.phone"/>
                     </div>
                     <div class="col-5 col-auto">
-                        <span t-field="o.move_ids[0].partner_id.street" style="margin-left 15px"/>
-                        <span t-field="o.move_ids[0].partner_id.zip"/>
+                        <span t-field="o.partner_id.street" style="margin-left 15px"/>
+                        <span t-field="o.partner_id.zip"/>
                     </div>
                     <div class="col-2 col-auto">
-                        <span t-field="o.move_ids[0].partner_id.state_id.name"/>
+                        <span t-field="o.partner_id.state_id.name"/>
                     </div>
                 </div>
 

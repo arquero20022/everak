@@ -16,6 +16,7 @@
         "account",
         "stock",
         "web",
+        "delivery_inplast",
     ],
     "data": [
         "security/ir.model.access.csv",
