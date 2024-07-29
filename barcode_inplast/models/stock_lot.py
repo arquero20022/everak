@@ -41,9 +41,6 @@ class StockLot(models.Model):
     pnt_originating_lot_id = fields.Many2one('stock.lot', string="Originating Lot",
                                          domain="[('product_id', '=', pnt_originating_product_id)]")
 
-    # Campo para el nombre del lote padre
-    pnt_parent_lot_name = fields.Char(string="Parent Lot Name")
-
     ######### Compute Methods #########
     @api.depends('pnt_sub_product_id')
     def _compute_pnt_sub_product_selected(self):
@@ -93,8 +90,7 @@ class StockLot(models.Model):
                                 'product_id': record.pnt_sub_product_id.id,
                                 'name': lot_name,
                                 'pnt_originating_product_id': record.product_id.id,
-                                'pnt_originating_lot_id': record.id,
-                                'pnt_parent_lot_name': record.name
+                                'pnt_originating_lot_id': record._origin.id
                             })
                             boxes.append(new_lot.id)
                         else:

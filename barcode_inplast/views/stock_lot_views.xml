@@ -36,8 +36,7 @@
                 <xpath expr="//group[@name='main_group']" position="after">
                     <group string="Origin Information">
                         <field name="pnt_originating_product_id" readonly="1"/>
-                        <field name="pnt_originating_lot_id" readonly="0"/>
-                        <field name="pnt_parent_lot_name" readonly="1"/>
+                        <field name="pnt_originating_lot_id" readonly="1"/>
                     </group>
                 </xpath>
             </field>
