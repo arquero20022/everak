@@ -6,19 +6,38 @@
             <field name="model">stock.lot</field>
             <field name="inherit_id" ref="stock.view_production_lot_form"/>
             <field name="arch" type="xml">
-                <!-- Insertar campos de código de barras en el formulario de números de serie y lotes -->
+                <!-- Campo Sub Product -->
                 <xpath expr="//group[@name='main_group']" position="after">
-                    <group string="Barcode Input">
+                    <!-- Campo invisible para controlar la visibilidad -->
+                    <field name="pnt_sub_product_selected" invisible="1"/>
 
-                        <field name="barcode_input" placeholder="Scan or Enter Barcode(s)"/>
-                        <button name="process_barcodes" type="object" string="Process Barcodes" class="oe_highlight"/>
+                    <!-- Nuevo campo Sub Product -->
+                    <group string="Sub Product">
+                        <field name="pnt_sub_product_id" placeholder="Select Sub Product"/>
                     </group>
-                    <group>
-                        <field name="processed_barcodes">
+
+                    <!-- Grupo de entrada de código de barras, visible solo si se seleccionó el sub producto -->
+                    <group string="Barcode Input" invisible="not pnt_sub_product_selected">
+                        <field name="pnt_barcode_input" placeholder="Scan or Enter Barcode(s)"/>
+                    </group>
+                    <group invisible="not pnt_sub_product_selected">
+                        <field name="pnt_processed_barcodes" widget="many2many_tags">
                             <tree string="Processed Barcodes">
-                                <field name="barcode"/>
+                                <field name="name"/>
                             </tree>
                         </field>
+                    </group>
+
+                    <!-- Campo Sub Products invisible para el dominio -->
+                    <field name="pnt_sub_product_ids" invisible="1"/>
+                </xpath>
+
+                <!-- Información de origen -->
+                <xpath expr="//group[@name='main_group']" position="after">
+                    <group string="Origin Information">
+                        <field name="pnt_originating_product_id" readonly="1"/>
+                        <field name="pnt_originating_lot_id" readonly="0"/>
+                        <field name="pnt_parent_lot_name" readonly="1"/>
                     </group>
                 </xpath>
             </field>

@@ -17,7 +17,7 @@
     ],
     "data": [
         'views/stock_lot_views.xml',
-        'security/ir.model.access.csv',
+
 
 
     ],
