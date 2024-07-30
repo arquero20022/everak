@@ -7,12 +7,18 @@
             <xpath expr="//t[@t-name='stock.stock_report_delivery_has_serial_move_line']" position="inside">
 
                 <td class="text-center">
-                    <span t-field="o.product_id.pnt_box_qty"/>
-                    <span>/</span>
-                    <span t-field="o.product_id.pnt_parent_qty"/>
+                    <span>(</span>
+                    <span t-esc="move_line.quantity * o.product_id.pnt_box_qty"/>
+                    <span> X </span>
+                    <span t-esc="o.product_id.pnt_parent_qty/o.product_id.pnt_box_qty"/>
+                    <span>Und. / Caja</span>
+                    <span>)</span>
                 </td>
                 <td class="text-center">
-                  <span t-esc="o.product_id.pnt_box_qty * o.product_id.pnt_parent_qty"/>
+                    <span t-esc="move_line.quantity * o.product_id.pnt_parent_qty"/>
+                </td>
+                <td class="text-center">
+                    <span t-esc="o.product_id.pnt_parent_qty"/>
                 </td>
             </xpath>
         </template>
@@ -58,7 +64,10 @@
                         <strong>Caja/Unidades</strong>
                     </th>
                     <th class="text-center">
-                        <strong>Unidades/palet</strong>
+                        <strong>Unidades</strong>
+                    </th>
+                    <th class="text-center">
+                        <strong>Unidades x bulto</strong>
                     </th>
                 </xpath>
 
@@ -73,8 +82,9 @@
 
                 <xpath expr="//div[@t-if='not o.signature']" position="before">
                     <div style="width: 65%;">
+
                         <t t-set="company" t-value="o.company_id"/>
-                        <img t-if="company.pnt_goods_state_table"
+                        <img style="margin-top:50px;" t-if="company.pnt_goods_state_table"
                              t-att-src="image_data_uri(company.pnt_goods_state_table)"
                              alt="Company Image"/>
                     </div>
@@ -119,6 +129,51 @@
                             <span style="margin-left: 5px" t-esc="o.date.strftime('%d/%m/%Y')"/>
                         </div>
                     </div>
+                    <div style="font-size: 14px;">
+                        <div class="row" style="margin-top: 15px; margin-bottom: 20px;">
+                            <div class="col-6">
+                                <t t-if="o.carrier_id.pnt_agency_or_carrier">
+                                    <strong>Transport Agent</strong>
+                                    <span t-field="o.carrier_id"/>
+                                    <br/>
+                                </t>
+                                <t t-if="o.carrier_id.pnt_address">
+                                    <strong>Address</strong>
+                                    <span t-field="o.carrier_id.pnt_address"/>
+                                    <br/>
+                                </t>
+                                <t t-if="o.carrier_id.pnt_cif">
+                                    <strong>CIF</strong>
+                                    <span t-field="o.carrier_id.pnt_cif"/>
+                                    <br/>
+                                </t>
+                            </div>
+
+                            <div class="col-offset-15 col-5">
+                                <t t-if="o.carrier_id.pnt_driver_name">
+                                    <strong>Driver Name</strong>
+                                    <span t-field="o.carrier_id.pnt_driver_name"/>
+                                    <br/>
+                                </t>
+                                <t t-if="o.carrier_id.pnt_driver_id">
+                                    <strong>Driver ID</strong>
+                                    <span t-field="o.carrier_id.pnt_driver_id"/>
+                                    <br/>
+                                </t>
+                                <t t-if="o.carrier_id.pnt_license_plate">
+                                    <strong>License Plate</strong>
+                                    <span t-field="o.carrier_id.pnt_license_plate"/>
+                                    <br/>
+                                </t>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <strong style="margin-top: 5px;">Comments</strong>
+                                <br/>
+                            </div>
+                        </div>
+                    </div>
                     <div style="margin-top: 15px;">
                         <p>El poseedor final de los residuos de envases y embalajes usados deberá entregarlos en
                             condiciones
@@ -157,6 +212,7 @@
                         </div>
                         <div class="col-2 col-auto">
                             <span t-field="o.partner_id.phone"/>
+                            <span>  </span>
                         </div>
                         <div class="col-5 col-auto">
                             <span t-field="o.partner_id.street" style="margin-left 15px"/>
