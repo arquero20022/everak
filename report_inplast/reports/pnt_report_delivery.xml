@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <!-- Todos los templates para picking deben tener prioridad 922 para el filtro del M2O -->
+        <template id="pnt_report_delivery_document" name="Custom Delivery Document">
+            <t t-name="pnt_report_delivery_document">
+                <t t-call="web.html_container">
+                    <t t-call="stock.report_delivery_document"/>
+                    <!-- ITERAMOS LOTES -->
+                    <t t-foreach="o.move_line_ids" t-as="line">
+                            <t t-if="o.partner_id.pnt_picking_report_id.coa">
+                                <t t-if="line.product_id.pnt_product_coa.type == 'normal' or line.product_id.pnt_product_coa.type == 'buxton'"
+                                   t-call="report_inplast.coa_product_document_a"/>
+                                <t t-if="line.product_id.pnt_product_coa.type == 'nmp'"
+                                   t-call="report_inplast.coa_product_nmp_document"/>
+                                <t t-if="line.product_id.pnt_product_coa.type == 'asas'"
+                                   t-call="report_inplast.coa_product_handle_document"/>
+
+                                <!-- igual que arriba para buxton -->
+                                <t t-if="line.product_id.pnt_product_coa.type == 'buxton'">
+                                    <t t-if="o.partner_id.pnt_picking_report_id.coa_batch_certificate"
+                                   t-call="report_inplast.coa_product_batch_certificate_document"/>
+                                </t>
+                                <t t-if="o.partner_id.pnt_picking_report_id.coa_multicolor
+                             and line.product_id.pnt_product_coa.print_multicolor"
+                                   t-call="report_inplast.coa_product_document_multicolor_attachment"/>
+                                <t t-if="o.partner_id.pnt_picking_report_id.coa_milk
+                             and line.product_id.pnt_product_coa.print_quality_meassure"
+                                   t-call="report_inplast.coa_product_document_meassures_attachment"/>
+                                <t t-if="line.product_id.pnt_product_coa.print_components"
+                                   t-call="report_inplast.coa_product_document_attachment"/>
+                                <!-- FALTA BOX TRACKING  si cliente box tracking y ¿cajas? ... informe cajas-->
+                            </t>
+                    </t>
+                    <t t-if="o.carrier_id.pnt_print_picking_list" t-call="report_inplast.packing_list"/>
+                </t>
+            </t>
+        </template>
+
         <!-- Plantilla para extender stock_report_delivery_has_serial_move_line -->
         <template id="report_delivery_has_serial_move_line_inh"
                   inherit_id="stock.stock_report_delivery_has_serial_move_line" priority="99">
@@ -31,28 +67,6 @@
                     <span>hola2</span>
                 </td>
             </xpath>
-        </template>
-
-
-        <!-- Todos los templates para picking deben tener prioridad 922 para el filtro del M2O -->
-        <template id="pnt_report_delivery_document" name="Custom Delivery Document">
-            <t t-name="pnt_report_delivery_document">
-                <t t-call="web.html_container">
-                    <t t-call="stock.report_delivery_document"/>
-                    <t t-set="lines" t-value="o.move_ids"/>
-                    <t t-foreach="lines" t-as="line">
-                        <t t-if="o.partner_id.pnt_picking_report_id.coa"
-                           t-call="report_inplast.coa_product_document_a"/>
-                        <t t-if="o.partner_id.pnt_picking_report_id.coa"
-                           t-call="report_inplast.coa_product_handle_document"/>
-                        <t t-if="o.partner_id.pnt_picking_report_id.components_table"
-                           t-call="report_inplast.coa_product_document_attachment"/>
-                        <t t-if="o.partner_id.pnt_picking_report_id.coa_batch_certificate"
-                           t-call="report_inplast.coa_product_batch_certificate_document"/>
-                    </t>
-                    <t t-if="o.carrier_id.pnt_print_picking_list" t-call="report_inplast.packing_list"/>
-                </t>
-            </t>
         </template>
 
         <record id="inplast_report_picking_attachments" model="ir.ui.view">
