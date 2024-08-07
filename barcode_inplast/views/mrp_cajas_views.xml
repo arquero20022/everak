@@ -1,0 +1,19 @@
+<!-- views/mrp_cajas_views.xml -->
+<odoo>
+    <data>
+        <!-- Form View for Cajas -->
+        <record id="view_mrp_cajas_form" model="ir.ui.view">
+            <field name="name">mrp.cajas.form</field>
+            <field name="model">mrp.cajas</field>
+            <field name="arch" type="xml">
+                <form string="Cajas">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

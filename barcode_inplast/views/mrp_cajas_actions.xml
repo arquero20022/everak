@@ -1,0 +1,13 @@
+<!-- views/mrp_cajas_actions.xml -->
+<odoo>
+    <data>
+        <!-- Action to Open Cajas Form -->
+        <record id="action_mrp_cajas" model="ir.actions.act_window">
+            <field name="name">Cajas</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mrp.cajas</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

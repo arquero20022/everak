@@ -1,0 +1,17 @@
+<!-- views/mrp_workorder_inherit_views.xml -->
+<odoo>
+    <data>
+        <!-- Extend the form view to add a new button -->
+        <record id="mrp_workorder_form_inherit" model="ir.ui.view">
+            <field name="name">mrp.workorder.form.inherit</field>
+            <field name="model">mrp.workorder</field>
+            <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="%(action_mrp_cajas)d" type="action"
+                            string="Cajas" class="btn-primary"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

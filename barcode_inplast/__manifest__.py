@@ -12,14 +12,14 @@
     "application": False,
     "installable": True,
     "depends": [
-        "mrp",
+        "base","mrp",
 
     ],
     "data": [
         'views/stock_lot_views.xml',
-
-
-
+        'views/mrp_cajas_views.xml',
+        'views/mrp_cajas_actions.xml',
+        'views/mrp_workorder_inherit_views.xml',
     ],
 
 }
